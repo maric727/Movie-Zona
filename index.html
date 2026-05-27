@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieZona</title>
     <link rel="icon" type="image/x-icon" href="ikona.png">
-    <link rel="stylesheet" href="stil1.css">
-    <script defer src="skripta1.js"></script>
+    <link rel="stylesheet" href="stil.css">
+    <script defer src="skripta.js"></script>
 </head>
 <body>
   <div class="navigacija">
@@ -15,14 +15,31 @@
         <a id="link2" href="#" onclick="Učitaj(2)">BIOSKOP</a>
         <a id="link3" href="#" onclick="Učitaj(3)">ZAKUP SALA</a>
   </div><br><br><br><br>
-
     <div class="carousel" id="videi">
-      
-      
+      <div class="carousel-inner">
+            <div class="carousel-item">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/9c-DrMe8o5Q?autoplay=1&mute=1&loop=1&playlist=9c-DrMe8o5Q&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/_Dfc89TY-aA?autoplay=1&mute=1&loop=1&playlist=_Dfc89TY-aA&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            </div>
+            <div class="carousel-item">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/bKGxHflevuk?autoplay=1&mute=1&loop=1&playlist=bKGxHflevuk&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>      
+      </div>
+          <button class="carousel-control-prev" onclick="moveSlide(-1)">&#10094;</button>
+          <button class="carousel-control-next" onclick="moveSlide(1)">&#10095;</button>
     </div>
-</div>
+          
+
 <div id="ispis"></div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
     <footer class="site-footer">
   <div class="footer-top">
     <div class="footer-column">
