@@ -4,6 +4,144 @@ window.onload = function() {
     document.getElementById("link1").style.fontSize="25px";
 };
 
+// ===== MAIN LOAD =====
+function Učitaj(n){
+    switch(n){
+        case 1:
+            document.getElementById("ispis").innerHTML=`
+            <div class="filmovi"> <img onclick="UčitajFilm(0)" id="filmSlika" src="film1.jpg"><p id="glavniNaslov">DEVIL WEARS PRADA 2</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
+            <div class="filmovi"> <img onclick="UčitajFilm(1)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BNTdlNTNjNjctYTg2MC00NTFlLTliNTctODFiZjZmNWRkYTVlXkEyXkFqcGc@._V1_.jpg"><p id="glavniNaslov">THE IMMORTAL MAN</p><p id="sporedniNaslov">Početak prikazivanja: 15.05.2026.</p></div>
+            <div class="filmovi"> <img onclick="UčitajFilm(2)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BNjIwZWY4ZDEtMmIxZS00NDA4LTg4ZGMtMzUwZTYyNzgxMzk5XkEyXkFqcGc@._V1_.jpg"><p id="glavniNaslov">SINNERS</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
+            <div class="filmovi"> <img onclick="UčitajFilm(3)" id="filmSlika" src="film4.jpg"><p id="glavniNaslov">PROJECT HAIL MARY</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
+            <div class="filmovi"> <img onclick="UčitajFilm(4)" id="filmSlika" src="film5.jpg"><p id="glavniNaslov">F1: THE MOVIE</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
+            <div class="filmovi"> <img onclick="UčitajFilm(5)" id="filmSlika" src="https://m.media-amazon.com/images/S/pv-target-images/3de84cca07fc963b66a01a5465c2638066119711e89c707ce952555783dd4b4f.jpg"><p id="glavniNaslov">THE BATMAN</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
+            <div class="filmovi"> <img onclick="UčitajFilm(6)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"><p id="glavniNaslov">DUNE: PART TWO</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
+            <div class="filmovi"> <img onclick="UčitajFilm(7)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BZThlN2M4ZTUtYTU3Mi00MDE5LWFhYWUtNjkxMWEwNjUwNDVhXkEyXkFqcGc@._V1_.jpg"><p id="glavniNaslov">CRIME 101</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
+            <div class="filmovi"> <img onclick="UčitajFilm(8)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BNTg2YWNkN2EtMzc1Ny00ZTBhLWFmYTItMmMyNzhjNjhhNmVhXkEyXkFqcGc@._V1_.jpg"><p id="glavniNaslov">MORTAL KOMBAT II</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
+            `
+            document.getElementById("link1").style.opacity="100%";
+            document.getElementById("link1").style.fontSize="25px";
+            document.getElementById("link2").style.opacity="60%";
+            document.getElementById("link2").style.fontSize="20px";
+            document.getElementById("link3").style.opacity="60%";
+            document.getElementById("link3").style.fontSize="20px";
+            document.getElementById("videi").hidden=false;
+            document.getElementById("footer").style.marginTop="1800px";
+            break;
+        case 2:
+            
+            document.getElementById("link1").style.opacity="60%";
+            document.getElementById("link1").style.fontSize="20px";
+            document.getElementById("link2").style.opacity="100%";
+            document.getElementById("link2").style.fontSize="25px";
+            document.getElementById("link3").style.opacity="60%";
+            document.getElementById("link3").style.fontSize="20px";
+            document.getElementById("videi").hidden=false;
+            document.getElementById("footer").style.marginTop="-10px";
+            // Grupisanje filmova po bioskopu
+            const bioskopiMapa = {};
+            const bioskopiAdrese = {
+                "MOVIE ZONA UŠĆE SHOPPING CENTER": "Bulevar Mihajla Pupina 4, Beograd",
+                "MOVIE ZONA BEO SHOPPING CENTER": "Vojvode Stepe 141, Beograd",
+                "MOVIE ZONA DELTA CITY": "Jurija Gagarina 16, Beograd",
+                "MOVIE ZONA KRAGUJEVAC": "Cara Dušana 1, Kragujevac",
+                "MOVIE ZONA NOVI SAD": "Bulevar oslobođenja 103, Novi Sad",
+                "MOVIE ZONA NIŠ": "Bulevar Nemanjića 44, Niš"
+            };
+
+            filmoviPodaci.forEach(film => {
+                film.bioskopi.forEach(bioskop => {
+                    if (!bioskopiMapa[bioskop.naziv]) bioskopiMapa[bioskop.naziv] = [];
+                    bioskopiMapa[bioskop.naziv].push(film);
+                });
+            });
+
+            let bioskopiHTML2 = '';
+            for (const [nazivBioskopa, filmovi] of Object.entries(bioskopiMapa)) {
+                const adresa = bioskopiAdrese[nazivBioskopa] || '';
+                const filmoviKarteHTML = filmovi.map(film => `
+                    <div class="bios-film-karta" onclick="UčitajFilm(${film.id})">
+                        <div class="bios-film-poster-wrap">
+                            <img class="bios-film-poster" src="${film.slika}" alt="${film.naslov}">
+                            <div class="bios-film-hover-info">
+                                <span class="bios-film-zanr">${film.zanr}</span>
+                            </div>
+                        </div>
+                        <p class="bios-film-naslov">${film.naslov}</p>
+                        <p class="bios-film-pocetak">Od ${film.pocetakPrikazivanja}</p>
+                    </div>
+                `).join('');
+
+                bioskopiHTML2 += `
+                    <div class="bios-sekcija">
+                        <div class="bios-header">
+                            <div>
+                                <h2 class="bios-naziv">${nazivBioskopa}</h2>
+                                <p class="bios-adresa">${adresa}</p>
+                            </div>
+                        </div>
+                        <div class="bios-filmovi-skrol-wrap">
+                            <button class="bios-strelica bios-prev" onclick="skrolBioskop(this, -1)">&#10094;</button>
+                            <div class="bios-filmovi-skrol">
+                                ${filmoviKarteHTML}
+                            </div>
+                            <button class="bios-strelica bios-next" onclick="skrolBioskop(this, 1)">&#10095;</button>
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById("ispis").innerHTML = `<div class="bios-kontejner">${bioskopiHTML2}</div>`;
+            break;
+        case 3:
+            document.getElementById("link1").style.opacity="60%";
+            document.getElementById("link1").style.fontSize="20px";
+            document.getElementById("link2").style.opacity="60%";
+            document.getElementById("link2").style.fontSize="20px";
+            document.getElementById("link3").style.opacity="100%";
+            document.getElementById("link3").style.fontSize="25px";
+            document.getElementById("videi").hidden=false;
+            document.getElementById("footer").style.marginTop="100px";
+            document.getElementById("ispis").innerHTML=`<div class="tekst">
+            <br><br>
+            <h2 id="tekstVeliki"><b>ZAKUP BIOSKOPSKIH SALA</b></h2>
+            <h2 id="tekstVeliki"><b>MOVIE ZONA - PRAVO MESTO ZA VAŠ DOGAĐAJ</b></h2>
+            <p>- Promotivni događaji<br>
+
+                - Kongresi<br>
+
+                - Prezentacije proizvoda<br>
+
+                - Seminari<br><br>
+
+
+
+                Tražite jedinstvenu lokaciju za sledeći korporativni događaj?<br><br>
+
+                Movie Zona nudi atraktivan prostor za sastanke, korporativne događaje, team building sastanke ili događaje iz oblasti kulture u prostranom foajeu, komfornim salama sa savršenom tehnikom prezentacije slike i zvuka, što čini vaš događaj izuzetnim za klijente i njihove goste.<br><br>
+
+                Movie Zona predstavlja idealan prostor i jedinstvenu postavku za vaš događaj. Svaki događaj može da se kombinuje sa nekim filmom. Pomešajte posao sa uživanjem i na taj način efikasno prenesite svoje poruke!
+            </p><br><br><br><br><br><br>
+            <hr><br><br>
+            <p><b>
+            RADUJEMO SE VAŠEM UPITU!</b>
+            </p><br>
+            <p>
+            Movie Zona SRB<br>
+            Marketing odeljenje<br>
+            Jurija Gagarina 16-16A<br>
+            11070 Novi Beograd<br>
+            </p>
+            <p>
+            Telefon: <a href="#" style="color:red;text-decoration:underline">+381 11 2233 445</a><br>
+            E-Mail adresa: <a href="#" style="color:red;text-decoration:underline">marketing@moviezona.rs</a><br>
+            </p>
+            </div>
+            `;
+            break;
+    }
+}
+
+
 // ===== FILM DATA =====
 const filmoviPodaci = [
     {
@@ -253,7 +391,7 @@ function generisiDatume() {
     return datumi;
 }
 
-// ===== FILM PAGE =====
+// ===== FILM POPUP =====
 function UčitajFilm(id) {
     const film = filmoviPodaci[id];
     if (!film) return;
@@ -447,125 +585,6 @@ function potvrdiKupovinu() {
     alert(`✅ Uspešno ste rezervisali sedišta: ${izabranaSedista.join(', ')}\nUkupno: ${izabranaSedista.length * 650} RSD\n\nHvala na kupovini!`);
     document.getElementById('rezervacijaOverlay').remove();
     izabranaSedista = [];
-}
-
-// ===== MAIN LOAD =====
-function Učitaj(n){
-    switch(n){
-        case 1:
-            document.getElementById("ispis").innerHTML=`
-            <div class="filmovi"> <img onclick="UčitajFilm(0)" id="filmSlika" src="film1.jpg"><p id="glavniNaslov">DEVIL WEARS PRADA 2</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
-            <div class="filmovi"> <img onclick="UčitajFilm(1)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BNTdlNTNjNjctYTg2MC00NTFlLTliNTctODFiZjZmNWRkYTVlXkEyXkFqcGc@._V1_.jpg"><p id="glavniNaslov">THE IMMORTAL MAN</p><p id="sporedniNaslov">Početak prikazivanja: 15.05.2026.</p></div>
-            <div class="filmovi"> <img onclick="UčitajFilm(2)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BNjIwZWY4ZDEtMmIxZS00NDA4LTg4ZGMtMzUwZTYyNzgxMzk5XkEyXkFqcGc@._V1_.jpg"><p id="glavniNaslov">SINNERS</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
-            <div class="filmovi"> <img onclick="UčitajFilm(3)" id="filmSlika" src="film4.jpg"><p id="glavniNaslov">PROJECT HAIL MARY</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
-            <div class="filmovi"> <img onclick="UčitajFilm(4)" id="filmSlika" src="film5.jpg"><p id="glavniNaslov">F1: THE MOVIE</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
-            <div class="filmovi"> <img onclick="UčitajFilm(5)" id="filmSlika" src="https://m.media-amazon.com/images/S/pv-target-images/3de84cca07fc963b66a01a5465c2638066119711e89c707ce952555783dd4b4f.jpg"><p id="glavniNaslov">THE BATMAN</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
-            <div class="filmovi"> <img onclick="UčitajFilm(6)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"><p id="glavniNaslov">DUNE: PART TWO</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
-            <div class="filmovi"> <img onclick="UčitajFilm(7)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BZThlN2M4ZTUtYTU3Mi00MDE5LWFhYWUtNjkxMWEwNjUwNDVhXkEyXkFqcGc@._V1_.jpg"><p id="glavniNaslov">CRIME 101</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
-            <div class="filmovi"> <img onclick="UčitajFilm(8)" id="filmSlika" src="https://m.media-amazon.com/images/M/MV5BNTg2YWNkN2EtMzc1Ny00ZTBhLWFmYTItMmMyNzhjNjhhNmVhXkEyXkFqcGc@._V1_.jpg"><p id="glavniNaslov">MORTAL KOMBAT II</p><p id="sporedniNaslov">Početak prikazivanja: 30.06.2026.</p></div>
-            `
-            document.getElementById("link1").style.opacity="100%";
-            document.getElementById("link1").style.fontSize="25px";
-            document.getElementById("link2").style.opacity="60%";
-            document.getElementById("link2").style.fontSize="20px";
-            document.getElementById("link3").style.opacity="60%";
-            document.getElementById("link3").style.fontSize="20px";
-            document.getElementById("videi").hidden=false;
-            break;
-        case 2:
-            document.getElementById("link1").style.opacity="60%";
-            document.getElementById("link1").style.fontSize="20px";
-            document.getElementById("link2").style.opacity="100%";
-            document.getElementById("link2").style.fontSize="25px";
-            document.getElementById("link3").style.opacity="60%";
-            document.getElementById("link3").style.fontSize="20px";
-            document.getElementById("videi").hidden=false;
-            // Grupisanje filmova po bioskopu
-            const bioskopiMapa = {};
-            const bioskopiAdrese = {
-                "MOVIE ZONA UŠĆE SHOPPING CENTER": "Bulevar Mihajla Pupina 4, Beograd",
-                "MOVIE ZONA BEO SHOPPING CENTER": "Vojvode Stepe 141, Beograd",
-                "MOVIE ZONA DELTA CITY": "Jurija Gagarina 16, Beograd",
-                "MOVIE ZONA KRAGUJEVAC": "Cara Dušana 1, Kragujevac",
-                "MOVIE ZONA NOVI SAD": "Bulevar oslobođenja 103, Novi Sad",
-                "MOVIE ZONA NIŠ": "Bulevar Nemanjića 44, Niš"
-            };
-
-            filmoviPodaci.forEach(film => {
-                film.bioskopi.forEach(bioskop => {
-                    if (!bioskopiMapa[bioskop.naziv]) bioskopiMapa[bioskop.naziv] = [];
-                    bioskopiMapa[bioskop.naziv].push(film);
-                });
-            });
-
-            let bioskopiHTML2 = '';
-            for (const [nazivBioskopa, filmovi] of Object.entries(bioskopiMapa)) {
-                const adresa = bioskopiAdrese[nazivBioskopa] || '';
-                const filmoviKarteHTML = filmovi.map(film => `
-                    <div class="bios-film-karta" onclick="UčitajFilm(${film.id})">
-                        <div class="bios-film-poster-wrap">
-                            <img class="bios-film-poster" src="${film.slika}" alt="${film.naslov}">
-                            <div class="bios-film-hover-info">
-                                <span class="bios-film-zanr">${film.zanr}</span>
-                            </div>
-                        </div>
-                        <p class="bios-film-naslov">${film.naslov}</p>
-                        <p class="bios-film-pocetak">Od ${film.pocetakPrikazivanja}</p>
-                    </div>
-                `).join('');
-
-                bioskopiHTML2 += `
-                    <div class="bios-sekcija">
-                        <div class="bios-header">
-                            <div>
-                                <h2 class="bios-naziv">${nazivBioskopa}</h2>
-                                <p class="bios-adresa">${adresa}</p>
-                            </div>
-                        </div>
-                        <div class="bios-filmovi-skrol-wrap">
-                            <button class="bios-strelica bios-prev" onclick="skrolBioskop(this, -1)">&#10094;</button>
-                            <div class="bios-filmovi-skrol">
-                                ${filmoviKarteHTML}
-                            </div>
-                            <button class="bios-strelica bios-next" onclick="skrolBioskop(this, 1)">&#10095;</button>
-                        </div>
-                    </div>
-                `;
-            }
-
-            document.getElementById("ispis").innerHTML = `<div class="bios-kontejner">${bioskopiHTML2}</div>`;
-            break;
-        case 3:
-            document.getElementById("link1").style.opacity="60%";
-            document.getElementById("link1").style.fontSize="20px";
-            document.getElementById("link2").style.opacity="60%";
-            document.getElementById("link2").style.fontSize="20px";
-            document.getElementById("link3").style.opacity="100%";
-            document.getElementById("link3").style.fontSize="25px";
-            document.getElementById("videi").hidden=true;
-            document.getElementById("ispis").innerHTML=`<div class="tekst">
-            <h2 id="tekstVeliki"><b>ZAKUP BIOSKOPSKIH SALA</b></h2>
-            <h2 id="tekstVeliki"><b>MOVIE ZONA - PRAVO MESTO ZA VAŠ DOGAĐAJ</b></h2>
-            <p>- Promotivni događaji<br>
-
-                - Kongresi<br>
-
-                - Prezentacije proizvoda<br>
-
-                - Seminari<br><br>
-
-
-
-                Tražite jedinstvenu lokaciju za sledeći korporativni događaj?<br><br>
-
-                Movie Zona nudi atraktivan prostor za sastanke, korporativne događaje, team building sastanke ili događaje iz oblasti kulture u prostranom foajeu, komfornim salama sa savršenom tehnikom prezentacije slike i zvuka, što čini vaš događaj izuzetnim za klijente i njihove goste.<br><br>
-
-                Movie Zona predstavlja idealan prostor i jedinstvenu postavku za vaš događaj. Svaki događaj može da se kombinuje sa nekim filmom. Pomešajte posao sa uživanjem i na taj način efikasno prenesite svoje poruke!
-            </p>
-            </div>
-            `;
-            break;
-    }
 }
 
 let currentIndex = 0;

@@ -70,7 +70,8 @@ a{
     float: left;
     overflow: hidden;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 2%;
+    margin-bottom: 2%;
     width: 33%;
 }
 #glavniNaslov{
@@ -95,7 +96,7 @@ a{
   width: 102%;
   margin-left: -10px;
   position: absolute;
-  margin-top: 100%;
+  margin-top: 120%;
 }
 .footer-top {
   display: flex;
